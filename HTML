@@ -1,0 +1,98 @@
+<form id="contactForm" novalidate>
+  <fieldset>
+    <legend>Get in Touch</legend>
+    
+    <!-- Name Field -->
+    <div class="form-group">
+      <label for="fullName">Full Name <span aria-hidden="true">*</span></label>
+      <input 
+        type="text" 
+        id="fullName" 
+        name="fullName" 
+        required 
+        aria-required="true"
+        aria-describedby="nameError"
+      >
+      <div id="nameError" class="error-message" aria-live="polite"></div>
+    </div>
+
+    <!-- Email Field -->
+    <div class="form-group">
+      <label for="email">Email Address <span aria-hidden="true">*</span></label>
+      <input 
+        type="email" 
+        id="email" 
+        name="email" 
+        required 
+        aria-required="true"
+        aria-describedby="emailError"
+      >
+      <div id="emailError" class="error-message" aria-live="polite"></div>
+    </div>
+
+    <!-- Subject/Category Fieldset Group -->
+    <fieldset class="sub-fieldset">
+      <legend>What is this regarding?</legend>
+      <div class="radio-group">
+        <label>
+          <input type="radio" name="subject" value="general" required> General Inquiry
+        </label>
+        <label>
+          <input type="radio" name="subject" value="support"> Technical Support
+        </label>
+      </div>
+    </fieldset>
+
+    <!-- Message Field -->
+    <div class="form-group">
+      <label for="message">Message <span aria-hidden="true">*</span></label>
+      <textarea 
+        id="message" 
+        name="message" 
+        rows="5" 
+        required 
+        aria-required="true"
+        aria-describedby="messageError"
+      ></textarea>
+      <div id="messageError" class="error-message" aria-live="polite"></div>
+    </div>
+
+    <button type="submit">Send Message</button>
+  </fieldset>
+</form>
+JavaScript
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  let isValid = true;
+
+  // Validate Full Name
+  const nameInput = document.getElementById('fullName');
+  const nameError = document.getElementById('nameError');
+  if (!nameInput.value.trim()) {
+    nameInput.setAttribute('aria-invalid', 'true');
+    nameError.textContent = 'Please enter your full name.';
+    isValid = false;
+  } else {
+    nameInput.removeAttribute('aria-invalid');
+    nameError.textContent = '';
+  }
+
+  // Validate Email
+  const emailInput = document.getElementById('email');
+  const emailError = document.getElementById('emailError');
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(emailInput.value)) {
+    emailInput.setAttribute('aria-invalid', 'true');
+    emailError.textContent = 'Please enter a valid email address.';
+    isValid = false;
+  } else {
+    emailInput.removeAttribute('aria-invalid');
+    emailError.textContent = '';
+  }
+
+  // If valid, proceed with submission logic
+  if (isValid) {
+    alert('Form submitted successfully!');
+    // this.submit();
+  }
+});
